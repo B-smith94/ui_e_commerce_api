@@ -86,6 +86,7 @@ const CustomerForm = () =>{
                         {errors.name}
                     </Form.Control.Feedback>
                 </Form.Group>
+
                 <Form.Group controlId="customerEmail">
                     <Form.Label>Email:</Form.Label>
                     <Form.Control
@@ -100,6 +101,7 @@ const CustomerForm = () =>{
                         {errors.email}
                     </Form.Control.Feedback>
                 </Form.Group>
+                
                 <Form.Group controlId="customerPhone">
                     <Form.Label>Phone:</Form.Label>
                     <Form.Control

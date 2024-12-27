@@ -5,6 +5,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const OrderForm = () => {
     const [order, setOrder] = useState({ date: '', customerId: '', expectedDeliveryDate: '', productId: '' })
+    /*const [currentDate, setCurrentDate] = useState({ year: '', day: '', month: '' });
+    const [deliveryDate, setDeliveryDate] = useState({ year: '', day: '', month: '' }); */
     const [isSubmitting, setSubmitting] = useState(false);
     const [errors, setErrors] = useState({});
     const [errorMessage, setErrorMessage] = useState('')
@@ -27,17 +29,22 @@ const OrderForm = () => {
         let errors = {};
         if (!order.customerId || order.customerId <=0) errors.customerId = 'Invalid Customer ID';
         if (!order.productId || order.productId <= 0) errors.productId = 'Invalid Product ID';
+        if (!order.date) errors.date = 'Must enter the date ordered';
+        if (!order.expectedDeliveryDate) errors.expectedDeliveryDate = 'Must enter the expected delivery date'
         setErrors(errors);
         return Object.keys(errors).length
     }
         
-    const getCurrentDate = () => {
+    /* const getCurrentDate = () => {
         const timestamp = new Date();
-        const year = timestamp.getFullYear();
-        const month = timestamp.getMonth();
-        const day = timestamp.getDate();
-        const date = `${year}-${day}-${month}`
-        return date;
+            const year = timestamp.getFullYear();
+            const month = timestamp.getMonth();
+            const day = (timestamp.getDate())+5;
+            setCurrentDate({
+                year: {year},
+                month: {month},
+                day: {day}
+            })
     };
 
     const getExpectedDelivery = () => {
@@ -45,19 +52,24 @@ const OrderForm = () => {
         const year = timestamp.getFullYear();
         const month = timestamp.getMonth();
         const day = timestamp.getDate();
-        const expectedDelivery = `${year}-${day+5}-${month}`
-        return expectedDelivery;
-    };
+        setCurrentDate({
+            year: {year},
+            month: {month},
+            day: {day} 
+        })
+    }; */
     
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (validateForm() > 0) return;
         setSubmitting(true);
         try {
+            /* getCurrentDate();
+            getExpectedDelivery(); */
             if (id) {
-                await axios.put(`http://127.0.0.1:5000/orders/${id}`)
+                await axios.put(`http://127.0.0.1:5000/orders/${id}`, order)
             } else {
-                await axios.post('http://127.0.0.1:5000/orders')
+                await axios.post('http://127.0.0.1:5000/orders', order)
             }
             setShowSuccessModal(true);
         } catch (error) {
@@ -71,8 +83,6 @@ const OrderForm = () => {
         const { name, value } = event.target;
         setOrder(prevOrder => ({
             ...prevOrder,
-            ['date']: `${getCurrentDate()}`,
-            ['expectedDeliveryDate']: `${getExpectedDelivery()}`,
             [name]: value
         }));
     };
@@ -98,10 +108,10 @@ const OrderForm = () => {
                         name='customerId'
                         value={order.customerId}
                         onChange={handleChange}
-                        isInvalid={!!errors.name}
+                        isInvalid={!!errors.customerId}
                     />
                     <Form.Control.Feedback type="invalid">
-                        {errors.name}
+                        {errors.customerId}
                     </Form.Control.Feedback>
                 </Form.Group>
 
@@ -112,10 +122,37 @@ const OrderForm = () => {
                         name='productId'
                         value={order.productId}
                         onChange={handleChange}
-                        isInvalid={!!errors.name}
+                        isInvalid={!!errors.productId}
                     />
                     <Form.Control.Feedback type="invalid">
-                        {errors.name}
+                        {errors.productId}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId='date'>
+                    <Form.Label>Date ordered:</Form.Label>
+                    <Form.Control
+                        type='date'
+                        name='date'
+                        value={order.date}
+                        onChange={handleChange}
+                        isInvalid={!!errors.date}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.date}
+                    </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group controlId='expectedDeliveryDate'>
+                    <Form.Label>Expected Delivery Date:</Form.Label>
+                    <Form.Control
+                        type='date'
+                        name='expectedDeliveryDate'
+                        value={order.expectedDeliveryDate}
+                        onChange={handleChange}
+                        isInvalid={!!errors.expectedDeliveryDate}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.expectedDeliveryDate}
                     </Form.Control.Feedback>
                 </Form.Group>
 
