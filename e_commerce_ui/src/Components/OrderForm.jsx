@@ -4,7 +4,12 @@ import { Form, Button, Alert, Modal, Spinner } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
 
 const OrderForm = () => {
-    const [order, setOrder] = useState({ date: '', customerId: '', expectedDeliveryDate: '', productId: '' })
+    const [order, setOrder] = useState({ 
+        date: '', 
+        customerId: '', 
+        expectedDeliveryDate: '', 
+        productId: '' 
+    });
     /*const [currentDate, setCurrentDate] = useState({ year: '', day: '', month: '' });
     const [deliveryDate, setDeliveryDate] = useState({ year: '', day: '', month: '' }); */
     const [isSubmitting, setSubmitting] = useState(false);
@@ -89,7 +94,12 @@ const OrderForm = () => {
 
     const handleClose = () => {
         setShowSuccessModal(false);
-        setOrder({ date: '', customerId: '', expectedDeliveryDate: '', productId: '' });
+        setOrder({ 
+            date: '', 
+            customerId: '', 
+            expectedDeliveryDate: '', 
+            productId: '' 
+        });
         setSubmitting(false);
         navigate('/orders');
     }
