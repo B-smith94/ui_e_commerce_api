@@ -122,7 +122,7 @@ const CustomerForm = () =>{
 
             <Modal show={showSuccessModal} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Success</Modal.Title>
+                    <Modal.Title>Success!</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Customer has been successfully {id ? 'updated' : 'added'}!</Modal.Body>
                 <Modal.Footer>

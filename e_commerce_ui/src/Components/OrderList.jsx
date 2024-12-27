@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, ListGroup, Row, Col } from 'react-bootstrap';
-import {array, func } from 'prop-types'
+import { array } from 'prop-types'
 
 const OrderList = () => {
     const [orders, setOrders] = useState([]);
@@ -17,6 +17,15 @@ const OrderList = () => {
             console.error('Error fetching orders', error);
         }
     }
+
+    const deleteOrder = async (id) => {
+        try {
+            await axios.delete(`http://127.0.0.1:5000/orders/${id}`);
+            fetchOrders();
+        } catch (error) {
+            console.error('Error deleting order:', error);
+        }
+    };
 
     useEffect(() => {
         fetchOrders()
@@ -37,7 +46,8 @@ const OrderList = () => {
                                     <div key={product.id}>{product.name}</div>
                                 ))}</p>
                                 <div>
-                                    <Button variant='primary' onClick={() => navigate(`/edit-order/${order.id}`)}>Edit</Button>
+                                    <Button variant='primary' onClick={() => navigate(`/edit-order/${order.id}`)} className='me-2'>Edit</Button>
+                                    <Button variant='danger' onClick={() => deleteOrder(order.id)} className='me-2'>Cancel Order</Button>
                                 </div>
                             </ListGroup.Item>
                         ))}

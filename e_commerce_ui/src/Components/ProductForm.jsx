@@ -106,7 +106,7 @@ const ProductForm = () => {
 
             <Modal show={showSuccessModal} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Success</Modal.Title>
+                    <Modal.Title>Success!</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Product has been successfully {id ? 'updated' : 'added'}!</Modal.Body>
                 <Modal.Footer>
