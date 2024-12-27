@@ -20,7 +20,7 @@ const CustomerDetails= () => {
 
     const deleteCustomer = async (customerId) => {
         try {
-            await axios.delete(`http://127.0.0.1:5000/products/${customerId}`);
+            await axios.delete(`http://127.0.0.1:5000/customers/${customerId}`);
             fetchCustomers();
         } catch (error) {
             console.error('Error deleting product:', error);
@@ -39,9 +39,9 @@ const CustomerDetails= () => {
                     <ListGroup>
                         {customers.map(customer => (
                             <ListGroup.Item key={customer.id} className='d-flex justify-content-evenly align-items-center shadow-sm p-3 mb-3 bg-white rounded'>
-                                <b>{customer.name}</b> (ID: {customer.id}) (Email: {customer.email}) (Phone: {customer.phone})
+                                <p><b>{customer.name} (ID: {customer.id})</b> <i>Email:</i> {customer.email}, <i>Phone:</i> {customer.phone}</p>
                                 <div>
-                                    <Button variant="primary" onClick={() => navigate(`/edit-customer/${customer.id}`)} className='me-2'>Edit</Button>
+                                    <Button variant="primary" onClick={() => navigate(`/edit-customer/${customer.id}`)} className='me-2'>Update</Button>
                                     <Button variant="danger" onClick={() => deleteCustomer(customer.id)} className='me-2'>Delete</Button>
                                 </div>
                             </ListGroup.Item>

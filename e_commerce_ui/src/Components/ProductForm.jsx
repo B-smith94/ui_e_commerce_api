@@ -17,7 +17,7 @@ const ProductForm = () => {
             axios.get(`http://127.0.0.1:5000/products/${id}`)
                 .then(response => {
                     setProduct(response.data);
-                    console.log(customer);
+                    console.log(product);
                 })
                 .catch(error => setErrorMessage(error.message));
         }
@@ -28,12 +28,12 @@ const ProductForm = () => {
         if (!product.name) errors.name = 'Product name is required';
         if (!product.price || product.price <= 0) errors.price = 'Price must be a positive number';
         setErrors(errors); 
-        return Object.keys(errors).length === 0;
+        return Object.keys(errors).length
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (validateForm()) return;
+        if (validateForm() > 0) return;
         setSubmitting(true);
         try {
             if (id) {

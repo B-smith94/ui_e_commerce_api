@@ -24,7 +24,7 @@ const OrderForm = () => {
 
     return (
         <div>
-            <h3>{id ? 'Edit' : 'Add'}</h3>
+            <h3>{id ? 'Edit' : 'Make'} an Order</h3>
             <h2>Component Under Construction</h2>
             <p>We will update very soon!</p>
         </div>

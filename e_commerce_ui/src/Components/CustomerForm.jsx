@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Form, Button, Alert, Modal } from "react-bootstrap";
+import { Form, Button, Alert, Modal, Spinner } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
 
 const CustomerForm = () =>{
@@ -29,12 +29,12 @@ const CustomerForm = () =>{
         if (!customer.email) errors.email = 'Email is required';
         if (!customer.phone) errors.phone = 'Phone is required';
         setErrors(errors);
-        return Object.keys(errors).length === 0;
+        return Object.keys(errors).length;
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (validateForm()) return;
+        if (validateForm() > 0) return;
         setSubmitting(true);
         try {
             if (id) {
@@ -42,6 +42,7 @@ const CustomerForm = () =>{
             } else {
                 await axios.post('http://127.0.0.1:5000/customers', customer);
             }
+            setShowSuccessModal(true);
         } catch (error) {
             setErrorMessage(error.message);
         } finally {
@@ -64,12 +65,12 @@ const CustomerForm = () =>{
         navigate('/customers');
     }
 
-    if (isSubmitting) return <p>Submitting product data...</p>
+    if (isSubmitting) return <p>Submitting customer data...</p>
 
     return (
         <>
             <Form onSubmit={handleSubmit}>
-                <h3>{id ? 'Edit' : 'Add'} Customer</h3>
+                <h3>{id ? 'Update' : 'Add'} Customer</h3>
                 {errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
                 <Form.Group controlId="customerName">
                     <Form.Label>Name:</Form.Label>
@@ -79,6 +80,7 @@ const CustomerForm = () =>{
                         value={customer.name}
                         onChange={handleChange}
                         isInvalid={!!errors.name}
+                        placeholder='First and last name'
                         />
                     <Form.Control.Feedback type='invalid'>
                         {errors.name}
@@ -92,6 +94,7 @@ const CustomerForm = () =>{
                         value={customer.email}
                         onChange={handleChange}
                         isInvalid={!!errors.email}
+                        placeholder='example123@example.com'
                         />
                     <Form.Control.Feedback type='invalid'>
                         {errors.email}
@@ -105,6 +108,7 @@ const CustomerForm = () =>{
                         value={customer.phone}
                         onChange={handleChange}
                         isInvalid={!!errors.phone}
+                        placeholder='123-456-7890'
                         />
                     <Form.Control.Feedback type='invalid'>
                         {errors.phone}

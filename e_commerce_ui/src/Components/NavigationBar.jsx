@@ -5,7 +5,7 @@ function NavigationBar () {
     return (
         <nav className="clearfix">
             <Navbar bg="light" expand="lg">
-                <Navbar.Brand href="/" >E-Comerce App</Navbar.Brand>
+                <Navbar.Brand href="/" className="p-2" >E-Commerce App</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
