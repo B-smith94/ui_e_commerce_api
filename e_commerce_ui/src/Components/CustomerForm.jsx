@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Form, Button, Alert, Modal, Spinner } from "react-bootstrap";
-import { useParams, useNavigate } from 'react-router-dom';
+
 
 const CustomerForm = () =>{
-    const [customer, setCustomer] = useState({ name: '', email: '', phone: '' });
-    const [isSubmitting, setSubmitting] = useState(false);
+    const [customer, setCustomer] = useState({ email: '', name: '', phone: '' });
     const [errors, setErrors] = useState({});
-    const [errorMessage, setErrorMessage] = useState('')
+    const [isSubmitting, setSubmitting] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState('');
+    const [errorMessage, setErrorMessage] = useState('')
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -19,9 +20,9 @@ const CustomerForm = () =>{
                     setCustomer(response.data);
                     console.log(customer);
                 })
-                .catch(error => setErrorMessage(error.message))
-        };
-    }, [id])
+                .catch(error => setErrorMessage(error.message));
+            }
+        }, [id])
 
     const validateForm = () => {
         let errors = {};
@@ -60,7 +61,7 @@ const CustomerForm = () =>{
 
     const handleClose = () => {
         setShowSuccessModal(false);
-        setCustomer({ name: '', email: '', phone: ''});
+        setCustomer({ email: '', name: '', phone: ''});
         setSubmitting(false);
         navigate('/customers');
     }

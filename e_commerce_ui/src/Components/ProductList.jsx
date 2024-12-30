@@ -39,9 +39,9 @@ const ProductList = () => {
                     <ListGroup>
                         {products.map(product => (
                             <ListGroup.Item key={product.id} className='d-flex justify-content-between align-items-center shadow-sm p-3 mb-3 bg-white rounded'>
-                                <b>{product.name}</b> (ID: {product.id}) (Price: ${product.price})
+                                <b>{product.name}</b> ID: {product.id} | Price: ${product.price}
                                 <div>
-                                    <Button variant='primary' onClick={() => navigate(`/edit-product/${product.id}`)} className='me-2'>Edit</Button>
+                                    <Button variant='primary' onClick={() => {console.log(product); navigate(`/edit-product/${product.id}`)}} className='me-2'>Edit</Button>
                                     <Button variant='danger' onClick={() => deleteProduct(product.id)} className='me-2'>Delete</Button>
                                 </div>
                             </ListGroup.Item>
