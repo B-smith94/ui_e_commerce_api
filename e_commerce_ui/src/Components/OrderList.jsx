@@ -46,7 +46,6 @@ const OrderList = () => {
                                     <div key={product.id}>{product.name}(Product ID: {product.id})</div>
                                 ))}</p>
                                 <div>
-                                    <Button variant='primary' onClick={() => {console.log(order); navigate(`/edit-order/${order.id}`)}} className='me-2'>Edit</Button>
                                     <Button variant='danger' onClick={() => deleteOrder(order.id)} className='me-2'>Cancel Order</Button>
                                 </div>
                             </ListGroup.Item>

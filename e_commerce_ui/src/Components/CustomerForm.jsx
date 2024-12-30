@@ -5,7 +5,7 @@ import { Form, Button, Alert, Modal, Spinner } from "react-bootstrap";
 
 
 const CustomerForm = () =>{
-    const [customer, setCustomer] = useState({ email: '', name: '', phone: '' });
+    const [customer, setCustomer] = useState({ name: '', email: '', phone: '' });
     const [errors, setErrors] = useState({});
     const [isSubmitting, setSubmitting] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState('');
@@ -61,7 +61,7 @@ const CustomerForm = () =>{
 
     const handleClose = () => {
         setShowSuccessModal(false);
-        setCustomer({ email: '', name: '', phone: ''});
+        setCustomer({ name: '', email: '', phone: ''});
         setSubmitting(false);
         navigate('/customers');
     }
@@ -81,7 +81,6 @@ const CustomerForm = () =>{
                         value={customer.name}
                         onChange={handleChange}
                         isInvalid={!!errors.name}
-                        placeholder='First and last name'
                         />
                     <Form.Control.Feedback type='invalid'>
                         {errors.name}
@@ -96,7 +95,6 @@ const CustomerForm = () =>{
                         value={customer.email}
                         onChange={handleChange}
                         isInvalid={!!errors.email}
-                        placeholder='example123@example.com'
                         />
                     <Form.Control.Feedback type='invalid'>
                         {errors.email}
@@ -111,7 +109,6 @@ const CustomerForm = () =>{
                         value={customer.phone}
                         onChange={handleChange}
                         isInvalid={!!errors.phone}
-                        placeholder='123-456-7890'
                         />
                     <Form.Control.Feedback type='invalid'>
                         {errors.phone}

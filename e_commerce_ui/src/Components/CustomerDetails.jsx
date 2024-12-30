@@ -2,19 +2,17 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import { Button, Container, ListGroup, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import {array, func } from 'prop-types'
 
 const CustomerDetails= () => {
-    const [customers, setCustomers] = useState([ ]);
+    const [customers, setCustomers] = useState([]);
     const navigate = useNavigate()
 
     const fetchCustomers = async () => {
         try {
             const response = await axios.get('http://127.0.0.1:5000/customers');
             setCustomers(response.data);
-            console.log(customers);
         } catch (error) {
-            console.error('Error fetching products', error);
+            console.error('Error fetching customers', error);
         }
     }
 
@@ -23,7 +21,7 @@ const CustomerDetails= () => {
             await axios.delete(`http://127.0.0.1:5000/customers/${customerId}`);
             fetchCustomers();
         } catch (error) {
-            console.error('Error deleting product:', error);
+            console.error('Error deleting customer:', error);
         }
     };
     
@@ -39,10 +37,10 @@ const CustomerDetails= () => {
                     <ListGroup>
                         {customers.map(customer => (
                             <ListGroup.Item key={customer.id} className='d-flex justify-content-evenly align-items-center shadow-sm p-3 mb-3 bg-white rounded'>
-                                <p><b>{customer.name} (ID: {customer.id})</b> | <i>Email:</i> {customer.email} | <i>Phone:</i> {customer.phone}</p>
+                                <b>{customer.name} | ID: {customer.id})</b> | <i>Email:</i> {customer.email} | <i>Phone:</i> {customer.phone}
                                 <div>
-                                <Button variant='primary' onClick={() => {console.log(customer); navigate(`/edit-customer/${customer.id}`)}} className='me-2'>Edit</Button>
-                                <Button variant="danger" onClick={() => deleteCustomer(customer.id)} className='me-2'>Delete</Button>
+                                    <Button variant='primary' onClick={() => navigate(`/edit-customer/${customer.id}`)} className='me-2'>Edit</Button>
+                                    <Button variant="danger" onClick={() => deleteCustomer(customer.id)} className='me-2'>Delete</Button>
                                 </div>
                             </ListGroup.Item>
                         ))}
@@ -51,12 +49,6 @@ const CustomerDetails= () => {
             </Row>
         </Container>
     )
-}
-
-CustomerDetails.propTypes = {
-    customers: array,
-    onEditCustomer: func,
-    onCustomerDelete: func
 }
 
 export default CustomerDetails;

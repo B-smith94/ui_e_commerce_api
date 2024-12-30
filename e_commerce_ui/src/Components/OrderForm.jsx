@@ -17,17 +17,6 @@ const OrderForm = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (id) {
-            axios.get(`http://127.0.0.1:5000/orders/${id}`)
-                .then(response => {
-                    setOrder(response.data);
-                    console.log(order);
-                })
-                .catch(error => setErrorMessage(error.message))
-        };
-    }, [id])
-
     const validateForm = () => {
         let errors = {};
         if (!order.customer_id || order.customer_id <=0) errors.customer_id = 'Invalid Customer ID';
@@ -43,11 +32,7 @@ const OrderForm = () => {
         if (validateForm() > 0) return;
         setSubmitting(true);
         try {
-            if (id) {
-                await axios.put(`http://127.0.0.1:5000/orders/${id}`, order)
-            } else {
-                await axios.post('http://127.0.0.1:5000/orders', order)
-            }
+            await axios.post('http://127.0.0.1:5000/orders', order)
             setShowSuccessModal(true);
         } catch (error) {
             setErrorMessage(error.message);
@@ -81,7 +66,7 @@ const OrderForm = () => {
     return (
         <>
             <Form onSubmit={handleSubmit}>
-                <h3>{id ? 'Update' : 'Make'} an Order</h3>
+                <h3>Make an Order</h3>
                 {errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
                 <Form.Group controlId="customer_id">
                     <Form.Label>Customer ID:</Form.Label>
@@ -147,7 +132,7 @@ const OrderForm = () => {
                 <Modal.Header closeButton>
                     <Modal.Title>Success!</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Order successfully {id ? 'updated!' : 'completed!'}</Modal.Body>
+                <Modal.Body>Order successfully completed!</Modal.Body>
                 <Modal.Footer>
                     <Button variant='secondary' onClick={handleClose}>Close</Button>
                 </Modal.Footer>

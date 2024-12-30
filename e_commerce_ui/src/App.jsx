@@ -24,7 +24,6 @@ function App() {
         <Route path='/edit-product/:id' element={<ProductForm />} />
         <Route path='/products' element={<ProductList />} />
         <Route path='/orders' element={<OrderList /> } />
-        <Route path='/edit-order/:id' element={<OrderForm /> } />
         <Route path='/new-order' element={<OrderForm /> } />
         <Route path='*' element ={<NotFound />} />
         {/* path=URL element=Componenet */}
