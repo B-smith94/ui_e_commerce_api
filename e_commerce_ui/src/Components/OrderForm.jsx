@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Form, Button, Alert, Modal, Spinner } from "react-bootstrap";
 import { useParams, useNavigate } from 'react-router-dom';
 
-const OrderForm = () => {
-    const [order, setOrder] = useState({ 
+const OrderForm = () => { 
+    const [order, setOrder] = useState({ //sets up a default object with blank values for each part of the form
         date: '', 
         customer_id: '', 
         expected_delivery_date: '', 
@@ -17,7 +17,7 @@ const OrderForm = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const validateForm = () => {
+    const validateForm = () => { // checks to see if any fields are blank and returns the appropriate messages in the errors state
         let errors = {};
         if (!order.customer_id || order.customer_id <=0) errors.customer_id = 'Invalid Customer ID';
         if (!order.product_id || order.product_id <= 0) errors.product_id = 'Invalid Product ID';
@@ -27,7 +27,7 @@ const OrderForm = () => {
         return Object.keys(errors).length
     }
     
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event) => { // If validation goes thorugh, adds the new order to the API
         event.preventDefault();
         if (validateForm() > 0) return;
         setSubmitting(true);
@@ -41,7 +41,7 @@ const OrderForm = () => {
         }
     };
 
-    const handleChange = (event) => {
+    const handleChange = (event) => { // spread opperator preserves unaltered key value pairs while setting the new pair to the prders state
         const { name, value } = event.target;
         setOrder(prevOrder => ({
             ...prevOrder,
@@ -49,7 +49,7 @@ const OrderForm = () => {
         }));
     };
 
-    const handleClose = () => {
+    const handleClose = () => { // resets the order state to its' default value
         setShowSuccessModal(false);
         setOrder({ 
             date: '', 

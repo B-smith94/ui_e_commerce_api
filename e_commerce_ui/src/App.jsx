@@ -11,7 +11,7 @@ import OrderForm from './Components/OrderForm';
 import './App.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-function App() {
+function App() { // Establishes routes for each path for proper navigation throughout Application
   return (
     <div className='app-container'>
       <NavigationBar />

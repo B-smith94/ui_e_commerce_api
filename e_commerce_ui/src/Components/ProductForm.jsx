@@ -12,7 +12,7 @@ const ProductForm = () => {
     const { id } = useParams(); 
     const navigate = useNavigate();
     
-    useEffect(() => {
+    useEffect(() => { // retrieves specific product data if an id is provided in the URL
         if (id) {
             axios.get(`http://127.0.0.1:5000/products/${id}`)
                 .then(response => {
@@ -23,7 +23,7 @@ const ProductForm = () => {
         }
     }, [id])
     
-    const validateForm = () => {
+    const validateForm = () => { // Makes sure that each field is filled out before submission
         let errors = {};
         if (!product.name) errors.name = 'Product name is required';
         if (!product.price || product.price <= 0) errors.price = 'Price must be a positive number';
@@ -31,8 +31,8 @@ const ProductForm = () => {
         return Object.keys(errors).length
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleSubmit = async (event) => {  // If validation was successful, updates the API with new information
+        event.preventDefault(); 
         if (validateForm() > 0) return;
         setSubmitting(true);
         try {
@@ -49,7 +49,7 @@ const ProductForm = () => {
         }
     };
 
-    const handleChange = (event) => {
+    const handleChange = (event) => { // Preserves unchanged information while allowing you to update product information
         const { name, value } = event.target;
         setProduct(prevProduct => ({
             ...prevProduct,
@@ -57,7 +57,7 @@ const ProductForm = () => {
         }));
     };
 
-    const handleClose = () => {
+    const handleClose = () => { // resets the product state to default
         setShowSuccessModal(false);
         setProduct({ name: '', price: '' });
         setSubmitting(false);

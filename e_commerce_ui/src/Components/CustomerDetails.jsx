@@ -54,7 +54,7 @@ const CustomerDetails= () => {
                 </Col>
             </Row>
 
-            <Modal show={showSuccessModal} onHide={handleClose}>
+            <Modal show={showSuccessModal} onHide={handleClose}>{/* Displays to confirm when Customer Details were successfully deleted */}
                 <Modal.Header closeButton>
                     <Modal.Title>Deletion Successful</Modal.Title>
                 </Modal.Header>

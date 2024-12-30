@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Container, ListGroup, Row, Col, Modal } from 'react-bootstrap';
-import { array } from 'prop-types'
+
 
 const OrderList = () => {
-    const [orders, setOrders] = useState([]);
+    const [orders, setOrders] = useState([]); 
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-    const fetchOrders = async () => {
+    const fetchOrders = async () => { // fetches data for all orders
         try {
             const response = await axios.get('http://127.0.0.1:5000/orders');
             setOrders(response.data);
@@ -17,7 +17,7 @@ const OrderList = () => {
         }
     }
 
-    const deleteOrder = async (id) => {
+    const deleteOrder = async (id) => { // function to delete a selected order
         try {
             await axios.delete(`http://127.0.0.1:5000/orders/${id}`);
             fetchOrders();
@@ -50,7 +50,7 @@ const OrderList = () => {
                                     <div key={product.id}>{product.name}(Product ID: {product.id})</div>
                                 ))}</p>
                                 <div>
-                                    <Button variant='danger' onClick={() => deleteOrder(order.id)} className='me-2'>Cancel Order</Button>
+                                    <Button variant='danger' onClick={() => deleteOrder(order.id)} className='me-2'>Cancel Order</Button> {/* creates button that will delete the associated order */}
                                 </div>
                             </ListGroup.Item>
                         ))}
@@ -58,7 +58,7 @@ const OrderList = () => {
                 </Col>
             </Row>
             
-            <Modal show={showSuccessModal} onHide={handleClose}>
+            <Modal show={showSuccessModal} onHide={handleClose}> {/* displays a message to confirm deletion of an order */}
                 <Modal.Header closeButton>
                     <Modal.Title>Deletion Successful</Modal.Title>
                 </Modal.Header>
@@ -71,10 +71,6 @@ const OrderList = () => {
             </Modal>
         </Container>
     )
-}
-
-OrderList.propTypes = {
-    orders: array
 }
 
 export default OrderList;

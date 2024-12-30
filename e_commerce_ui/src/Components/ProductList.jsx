@@ -8,7 +8,7 @@ const ProductList = () => {
     const navigate = useNavigate();
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     
-    const fetchProducts = async () => {
+    const fetchProducts = async () => { // Fetches data from the Products table in the API
         try {
             const response = await axios.get('http://127.0.0.1:5000/products');
             setProducts(response.data);
@@ -17,7 +17,7 @@ const ProductList = () => {
         }
     }
 
-    const deleteProduct = async (id) => {
+    const deleteProduct = async (id) => { // funciton to delete selected product
         try {
             await axios.delete(`http://127.0.0.1:5000/products/${id}`);
             fetchProducts();
@@ -31,7 +31,7 @@ const ProductList = () => {
         setShowSuccessModal(false);
     }
 
-    useEffect(() => {
+    useEffect(() => { 
         fetchProducts()
     }, []);
 
@@ -45,8 +45,8 @@ const ProductList = () => {
                             <ListGroup.Item key={product.id} className='d-flex justify-content-between align-items-center shadow-sm p-3 mb-3 bg-white rounded'>
                                 <b>{product.name}</b> ID: {product.id} | Price: ${product.price}
                                 <div>
-                                    <Button variant='primary' onClick={() => navigate(`/edit-product/${product.id}`)} className='me-2'>Edit</Button>
-                                    <Button variant='danger' onClick={() => deleteProduct(product.id)} className='me-2'>Delete</Button>
+                                    <Button variant='primary' onClick={() => navigate(`/edit-product/${product.id}`)} className='me-2'>Edit</Button>{/* redirects to the Edit Product page and fills the form element with selected data to edit */}
+                                    <Button variant='danger' onClick={() => deleteProduct(product.id)} className='me-2'>Delete</Button>{/* deletes product */}
                                 </div>
                             </ListGroup.Item>
                         ))}
@@ -54,7 +54,7 @@ const ProductList = () => {
                 </Col>
             </Row>
 
-            <Modal show={showSuccessModal} onHide={handleClose}>
+            <Modal show={showSuccessModal} onHide={handleClose}> {/* confirms product deletion */}
                 <Modal.Header closeButton>
                     <Modal.Title>Deletion Successful</Modal.Title>
                 </Modal.Header>

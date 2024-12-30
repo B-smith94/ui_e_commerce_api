@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 
-function NavigationBar () {
+function NavigationBar () { // sets up Navigation bar
     return (
         <nav className="clearfix">
             <Navbar bg="light" expand="lg">

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function NotFound() {
+function NotFound() { // If a page is not found, this page loads and provides a link to take you back to the homepage
     return (
         <div>
             <h2>404 - Not Found</h2>

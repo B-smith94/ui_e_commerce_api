@@ -12,7 +12,7 @@ const CustomerForm = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    useEffect(() => {
+    useEffect(() => { // When an ID is set in the URL, this pulls data based on that ID and sets the customer state to that information
         if (id) {
             axios.get(`http://127.0.0.1:5000/customers/${id}`)
                 .then(response => {
@@ -23,7 +23,7 @@ const CustomerForm = () => {
         }
     }, [id])
 
-    const validateForm = () => {
+    const validateForm = () => { // if any of the fields are left blank, these messages are logged in the errors state
         let errors = {};
         if (!customer.name) errors.name = 'Customer name is requried';
         if (!customer.email) errors.email = 'Customer email is required';
@@ -32,7 +32,7 @@ const CustomerForm = () => {
         return Object.keys(errors).length;
     };
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event) => { // validates the form, updates the database with inputs in the form, logs errors that occur
         event.preventDefault();
         if (validateForm() > 0) return;
         setSubmitting(true);
@@ -50,7 +50,7 @@ const CustomerForm = () => {
         }
     };
 
-    const handleChange = (event) => {
+    const handleChange = (event) => { // updates changed fields without removing any other key value pairs in the customer state
         const { key, value } = event.target;
         setCustomer(prevCustomer => ({
             ...prevCustomer,
@@ -58,7 +58,7 @@ const CustomerForm = () => {
         }));
     }
 
-    const handleClose = () => {
+    const handleClose = () => { // resets the various states to their default values
         setShowSuccessModal(false);
         setCustomer({ name: '', email: '', phone: '' });
         setSubmitting(false);
@@ -67,7 +67,7 @@ const CustomerForm = () => {
 
     if (isSubmitting) return <p>Submitting product data...</p>
 
-    return (
+    return ( // renders form
         <>
             <Form onSubmit={handleSubmit}>
                 <h3>{id? 'Edit' : 'Add'} Customer</h3>
