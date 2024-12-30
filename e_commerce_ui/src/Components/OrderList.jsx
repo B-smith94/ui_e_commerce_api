@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Button, Container, ListGroup, Row, Col } from 'react-bootstrap';
+import { Button, Container, ListGroup, Row, Col, Modal } from 'react-bootstrap';
 import { array } from 'prop-types'
 
 const OrderList = () => {
     const [orders, setOrders] = useState([]);
-    const navigate = useNavigate()
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const fetchOrders = async () => {
         try {
@@ -22,6 +22,7 @@ const OrderList = () => {
         try {
             await axios.delete(`http://127.0.0.1:5000/orders/${id}`);
             fetchOrders();
+            setShowSuccessModal(true);
         } catch (error) {
             console.error('Error deleting order:', error);
         }
@@ -30,6 +31,10 @@ const OrderList = () => {
     useEffect(() => {
         fetchOrders()
     }, [])
+
+    const handleClose = () => {
+        setShowSuccessModal(false);
+    }
 
     return (
         <Container>
@@ -53,6 +58,18 @@ const OrderList = () => {
                     </ListGroup>
                 </Col>
             </Row>
+            
+            <Modal show={showSuccessModal} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Deletion Successful</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Order successfully canceled.</Modal.Body>
+                <Modal.Footer>
+                    <Button variant='secondary' onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </Container>
     )
 }

@@ -1,15 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Form, Button, Alert, Modal, Spinner } from "react-bootstrap";
 
-
-const CustomerForm = () =>{
-    const [customer, setCustomer] = useState({ name: '', email: '', phone: '' });
+const CustomerForm = () => {
+    const [customer, setCustomer] = useState({ name: '', email: '', phone: ''} );
     const [errors, setErrors] = useState({});
     const [isSubmitting, setSubmitting] = useState(false);
-    const [showSuccessModal, setShowSuccessModal] = useState('');
-    const [errorMessage, setErrorMessage] = useState('')
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -21,14 +20,14 @@ const CustomerForm = () =>{
                     console.log(customer);
                 })
                 .catch(error => setErrorMessage(error.message));
-            }
-        }, [id])
+        }
+    }, [id])
 
     const validateForm = () => {
         let errors = {};
-        if (!customer.name) errors.name = 'Name is required';
-        if (!customer.email) errors.email = 'Email is required';
-        if (!customer.phone) errors.phone = 'Phone is required';
+        if (!customer.name) errors.name = 'Customer name is requried';
+        if (!customer.email) errors.email = 'Customer email is required';
+        if (!customer.phone) errors.phone = 'Customer phone is required';
         setErrors(errors);
         return Object.keys(errors).length;
     };
@@ -39,7 +38,7 @@ const CustomerForm = () =>{
         setSubmitting(true);
         try {
             if (id) {
-                await axios.put(`http://127.0.0.1:5000/customers/${id}`, customer); 
+                await axios.put(`http://127.0.0.1:5000/customers/${id}`, customer);
             } else {
                 await axios.post('http://127.0.0.1:5000/customers', customer);
             }
@@ -52,79 +51,79 @@ const CustomerForm = () =>{
     };
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
+        const { key, value } = event.target;
         setCustomer(prevCustomer => ({
             ...prevCustomer,
-            [name]: value
+            [key]: value
         }));
-    };
+    }
 
     const handleClose = () => {
         setShowSuccessModal(false);
-        setCustomer({ name: '', email: '', phone: ''});
+        setCustomer({ name: '', email: '', phone: '' });
         setSubmitting(false);
         navigate('/customers');
     }
 
-    if (isSubmitting) return <p>Submitting customer data...</p>
+    if (isSubmitting) return <p>Submitting product data...</p>
 
     return (
         <>
             <Form onSubmit={handleSubmit}>
-                <h3>{id ? 'Update' : 'Add'} Customer</h3>
-                {errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
+                <h3>{id? 'Edit' : 'Add'} Customer</h3>
+                {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
                 <Form.Group controlId="customerName">
                     <Form.Label>Name:</Form.Label>
-                    <Form.Control
+                    <Form.Control 
                         type="text"
-                        name='name'
+                        name="name"
                         value={customer.name}
                         onChange={handleChange}
                         isInvalid={!!errors.name}
-                        />
-                    <Form.Control.Feedback type='invalid'>
+                    />
+                    <Form.Control.Feedback type="invalid">
                         {errors.name}
                     </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="customerEmail">
                     <Form.Label>Email:</Form.Label>
-                    <Form.Control
+                    <Form.Control 
                         type="text"
-                        name='email'
+                        name="email"
                         value={customer.email}
                         onChange={handleChange}
                         isInvalid={!!errors.email}
-                        />
-                    <Form.Control.Feedback type='invalid'>
+                    />
+                    <Form.Control.Feedback type="invalid">
                         {errors.email}
                     </Form.Control.Feedback>
                 </Form.Group>
-                
+
                 <Form.Group controlId="customerPhone">
                     <Form.Label>Phone:</Form.Label>
-                    <Form.Control
+                    <Form.Control 
                         type="tel"
-                        name='phone'
+                        name="phone"
                         value={customer.phone}
                         onChange={handleChange}
                         isInvalid={!!errors.phone}
-                        />
-                    <Form.Control.Feedback type='invalid'>
+                    />
+                    <Form.Control.Feedback type="invalid">
                         {errors.phone}
                     </Form.Control.Feedback>
                 </Form.Group>
 
-                <Button variant='primary' type='submit' disabled={isSubmitting}>
-                    {isSubmitting ? <Spinner as='span' animation='border' size='sm' /> : 'Submit'}
+                <Button variant="primary" type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? <Spinner as="span" animation="border" size="sm" /> : 'Submit'}
                 </Button>
-            </Form>
+            </Form>    
 
             <Modal show={showSuccessModal} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Success!</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Customer has been successfully {id ? 'updated' : 'added'}!</Modal.Body>
+                <Modal.Body>Customer had been successfully {id ? 'updated' : 'added'}!</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
@@ -132,7 +131,7 @@ const CustomerForm = () =>{
                 </Modal.Footer>
             </Modal>
         </>
-    )
-}
+    );
+};
 
 export default CustomerForm;
