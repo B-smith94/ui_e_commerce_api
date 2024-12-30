@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Button, Container, ListGroup, Row, Col } from 'react-bootstrap';
+import { Button, Container, ListGroup, Row, Col, Modal } from 'react-bootstrap';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
     
     const fetchProducts = async () => {
         try {
@@ -20,10 +21,15 @@ const ProductList = () => {
         try {
             await axios.delete(`http://127.0.0.1:5000/products/${id}`);
             fetchProducts();
+            setShowSuccessModal(true);
         } catch (error) {
             console.error('Error deleting product:', error);
         }
     };
+
+    const handleClose = () => {
+        setShowSuccessModal(false);
+    }
 
     useEffect(() => {
         fetchProducts()
@@ -47,6 +53,18 @@ const ProductList = () => {
                     </ListGroup>
                 </Col>
             </Row>
+
+            <Modal show={showSuccessModal} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Deletion Successful</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Product successfully deleted.</Modal.Body>
+                <Modal.Footer>
+                    <Button variant='secondary' onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </Container>
     );
 };
